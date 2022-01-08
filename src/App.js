@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { Col, Row } from 'antd';
+import React from 'react';
+import InputWords from './components/InputWords';
+import BoardResult from './components/BoardResults';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 style={{textAlign: "center", marginTop: "150px"}}>Ghép chữ tiếng Việt thành câu</h1>
+      <div className="app" style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
+        <Row style={{width: "50%"}}>
+          <InputWords />
+          <BoardResult />
+        </Row>
+      </div>
+    </>
   );
 }
 
