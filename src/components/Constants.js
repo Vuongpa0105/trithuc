@@ -16,6 +16,6 @@ export const Point = {
     QUAN_HE_TU: 1
 };
 
-export const sentencePatterns = {
-
+export const Rules = {
+    
 }

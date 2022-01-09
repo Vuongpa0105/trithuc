@@ -15,16 +15,16 @@ const findWordInString = (word, stringType = "") => {
     return true;
 }
 
-const findTypeOfWord = (word, dataWords) => {
+const findTypeOfWord = (word, dataAboutWordTypes) => {
     let typeOfWord = {
         value: word,
         types: []
     };
-    if (!dataWords) 
+    if (!dataAboutWordTypes) 
         return;
-    findWordInString(word, dataWords?.DANH_TU) && typeOfWord.types.push("DANH_TU");
-    findWordInString(word, dataWords?.DONG_TU) && typeOfWord.types.push("DONG_TU");
-    findWordInString(word, dataWords?.TINH_TU) && typeOfWord.types.push("TINH_TU");
+    findWordInString(word, dataAboutWordTypes?.DANH_TU) && typeOfWord.types.push("DANH_TU");
+    findWordInString(word, dataAboutWordTypes?.DONG_TU) && typeOfWord.types.push("DONG_TU");
+    findWordInString(word, dataAboutWordTypes?.TINH_TU) && typeOfWord.types.push("TINH_TU");
     return typeOfWord;
 }
 
@@ -32,22 +32,24 @@ const InputWords = () => {
     const [words, setWords] = useState([""]);
 
     // useState words
-    const [dataWords, setDataWords] = useState({});
+    const [dataAboutWordTypes, setDataAboutWordTypes] = useState({});
+    const resultAfterSortingFromCategory = [];
     const handleSelectChange = (value) => {
         setWords(value);
     };
 
     const handleClick = () => {
         for (let i = 0; i < words.length; ++i) {
-            const typesOfWord = findTypeOfWord(words[i], dataWords);
-            console.log(typesOfWord);
+            const typesOfWord = findTypeOfWord(words[i], dataAboutWordTypes);
+            resultAfterSortingFromCategory.push(typesOfWord);
         }
+        console.log("resultAfterSortingFromCategory: ", resultAfterSortingFromCategory);
     }
 
     useEffect(() => {
-        FetchData(DANH_TU).then(value => setDataWords(prevState => {return {...prevState, DANH_TU: value}}));
-        FetchData(DONG_TU).then(value => setDataWords(prevState => {return {...prevState, DONG_TU: value}}));
-        FetchData(TINH_TU).then(value => setDataWords(prevState => {return {...prevState, TINH_TU: value}}));
+        FetchData(DANH_TU).then(value => setDataAboutWordTypes(prevState => {return {...prevState, DANH_TU: value}}));
+        FetchData(DONG_TU).then(value => setDataAboutWordTypes(prevState => {return {...prevState, DONG_TU: value}}));
+        FetchData(TINH_TU).then(value => setDataAboutWordTypes(prevState => {return {...prevState, TINH_TU: value}}));
     }, [])
 
     return (
