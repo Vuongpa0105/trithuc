@@ -8,21 +8,23 @@ import TINH_TU from "../data/tinhtu.txt";
 import DANH_TU from "../data/danhtu.txt";
 import DONG_TU from "../data/dongtu.txt";
 
-const findWordInString = (word, stringType) => {
+const findWordInString = (word, stringType = "") => {
     const position =  stringType.search(word);
     if (position === -1) 
         return false;
     return true;
 }
 
-const findTypeOfWord = (word, danhTu, dongTu, tinhTu) => {
+const findTypeOfWord = (word, dataWords) => {
     let typeOfWord = {
         value: word,
         types: []
     };
-    findWordInString(word, danhTu) && typeOfWord.types.push("DANH_TU");
-    findWordInString(word, dongTu) && typeOfWord.types.push("DONG_TU");
-    findWordInString(word, tinhTu) && typeOfWord.types.push("TINH_TU");
+    if (!dataWords) 
+        return;
+    findWordInString(word, dataWords?.DANH_TU) && typeOfWord.types.push("DANH_TU");
+    findWordInString(word, dataWords?.DONG_TU) && typeOfWord.types.push("DONG_TU");
+    findWordInString(word, dataWords?.TINH_TU) && typeOfWord.types.push("TINH_TU");
     return typeOfWord;
 }
 
@@ -30,23 +32,22 @@ const InputWords = () => {
     const [words, setWords] = useState([""]);
 
     // useState words
-    const [dataWords, setDataWords] = useState([{}]);
-
+    const [dataWords, setDataWords] = useState({});
     const handleSelectChange = (value) => {
         setWords(value);
     };
 
     const handleClick = () => {
         for (let i = 0; i < words.length; ++i) {
-            const typesOfWord = findTypeOfWord(words[i], danhTu, dongTu, tinhTu);
+            const typesOfWord = findTypeOfWord(words[i], dataWords);
             console.log(typesOfWord);
         }
     }
 
     useEffect(() => {
-        FetchData(DANH_TU).then(value => setDataWords(prevState => );
-        FetchData(DONG_TU).then(value => setDongTu(value.toLocaleLowerCase()));
-        FetchData(TINH_TU).then(value => setTinhTu(value.toLocaleLowerCase()));
+        FetchData(DANH_TU).then(value => setDataWords({...dataWords, DANH_TU: value}));
+        FetchData(DONG_TU).then(value => setDataWords({...dataWords, DONG_TU: value}));
+        FetchData(TINH_TU).then(value => setDataWords({...dataWords, TINH_TU: value}));
     }, [])
 
     return (
