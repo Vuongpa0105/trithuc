@@ -45,9 +45,9 @@ const InputWords = () => {
     }
 
     useEffect(() => {
-        FetchData(DANH_TU).then(value => setDataWords({...dataWords, DANH_TU: value}));
-        FetchData(DONG_TU).then(value => setDataWords({...dataWords, DONG_TU: value}));
-        FetchData(TINH_TU).then(value => setDataWords({...dataWords, TINH_TU: value}));
+        FetchData(DANH_TU).then(value => setDataWords(prevState => {return {...prevState, DANH_TU: value}}));
+        FetchData(DONG_TU).then(value => setDataWords(prevState => {return {...prevState, DONG_TU: value}}));
+        FetchData(TINH_TU).then(value => setDataWords(prevState => {return {...prevState, TINH_TU: value}}));
     }, [])
 
     return (
