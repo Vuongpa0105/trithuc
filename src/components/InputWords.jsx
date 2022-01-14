@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Select } from "antd";
+import { Button, Col, Input, Row } from "antd";
 import FetchData from "../data/FetchData";
-import { Point } from "./Constants";
-
 // Import txt file
 import TINH_TU from "../data/tinhtu.txt";
 import DANH_TU from "../data/danhtu.txt";
@@ -22,178 +20,206 @@ import TINH_THAI_TU from "../data/tinhthaitu.txt";
 import TINH_THAI_TU_CAU_KHIEN from "../data/tinhthaitucaukhien.txt";
 import TINH_THAI_TU_NGHI_VAN from "../data/tinhthaitunghivan.txt";
 import TINH_TU_CHI_CACH_THUC_MUC_DO from "../data/tinhtuchicachthucmucdo.txt";
+import Tag from "./Tag";
+import { ArrangeWordsIntoPhrases } from "./sorts/ArrangeWordsIntoPhrases";
 
-const findWordInString = (word, stringType = "") => {
-  const position = stringType.search(word);
+export const findWordInString = (word, stringType = "") => {
+  const position = stringType.indexOf(word);
   if (position === -1) return false;
   return true;
 };
 
-const findTypeOfWord = (word, dataWords) => {
+export const findTypeOfWord = (word, dataAboutWordTypes) => {
   let typeOfWord = {
     value: word,
     types: [],
   };
-  if (!dataWords) return;
-  findWordInString(word, dataWords?.DANH_TU) &&
+  if (!dataAboutWordTypes) return;
+  findWordInString(word, dataAboutWordTypes?.DANH_TU) &&
     typeOfWord.types.push("DANH_TU");
-  findWordInString(word, dataWords?.DONG_TU) &&
+  findWordInString(word, dataAboutWordTypes?.DONG_TU) &&
     typeOfWord.types.push("DONG_TU");
-  findWordInString(word, dataWords?.TINH_TU) &&
+  findWordInString(word, dataAboutWordTypes?.TINH_TU) &&
     typeOfWord.types.push("TINH_TU");
-  findWordInString(word, dataWords?.DAI_TU) && typeOfWord.types.push("DAI_TU");
-  findWordInString(word, dataWords?.DAI_TU_CHI_DINH) &&
+  findWordInString(word, dataAboutWordTypes?.DAI_TU) && typeOfWord.types.push("DAI_TU");
+  findWordInString(word, dataAboutWordTypes?.DAI_TU_CHI_DINH) &&
     typeOfWord.types.push("DAI_TU_CHI_DINH");
-  findWordInString(word, dataWords?.DANH_TU_CHI_TONG_LUONG) &&
+  findWordInString(word, dataAboutWordTypes?.DANH_TU_CHI_TONG_LUONG) &&
     typeOfWord.types.push("DANH_TU_CHI_TONG_LUONG");
-  findWordInString(word, dataWords?.DANH_TU_LOAI_THE) &&
+  findWordInString(word, dataAboutWordTypes?.DANH_TU_LOAI_THE) &&
     typeOfWord.types.push("DANH_TU_LOAI_THE");
-  findWordInString(word, dataWords?.DINH_TU_CHI_SO_LUONG) &&
+  findWordInString(word, dataAboutWordTypes?.DINH_TU_CHI_SO_LUONG) &&
     typeOfWord.types.push("DINH_TU_CHI_SO_LUONG");
-  findWordInString(word, dataWords?.DON_VI_DO_LUONG) &&
+  findWordInString(word, dataAboutWordTypes?.DON_VI_DO_LUONG) &&
     typeOfWord.types.push("DON_VI_DO_LUONG");
-  findWordInString(word, dataWords?.PHO_TU_DUNG_SAU) &&
+  findWordInString(word, dataAboutWordTypes?.PHO_TU_DUNG_SAU) &&
     typeOfWord.types.push("PHO_TU_DUNG_SAU");
-  findWordInString(word, dataWords?.PHO_TU_DUNG_TRUOC) &&
+  findWordInString(word, dataAboutWordTypes?.PHO_TU_DUNG_TRUOC) &&
     typeOfWord.types.push("PHO_TU_DUNG_TRUOC");
-  findWordInString(word, dataWords?.QUAN_HE_TU) &&
+  findWordInString(word, dataAboutWordTypes?.QUAN_HE_TU) &&
     typeOfWord.types.push("QUAN_HE_TU");
-  findWordInString(word, dataWords?.SO_TU_CHO_SO_LUONG) &&
+  findWordInString(word, dataAboutWordTypes?.SO_TU_CHO_SO_LUONG) &&
     typeOfWord.types.push("SO_TU_CHO_SO_LUONG");
-  findWordInString(word, dataWords?.THAN_TU) &&
+  findWordInString(word, dataAboutWordTypes?.THAN_TU) &&
     typeOfWord.types.push("THAN_TU");
-  findWordInString(word, dataWords?.TINH_THAI_TU) &&
+  findWordInString(word, dataAboutWordTypes?.TINH_THAI_TU) &&
     typeOfWord.types.push("TINH_THAI_TU");
-  findWordInString(word, dataWords?.TINH_THAI_TU_CAU_KHIEN) &&
+  findWordInString(word, dataAboutWordTypes?.TINH_THAI_TU_CAU_KHIEN) &&
     typeOfWord.types.push("TINH_THAI_TU_CAU_KHIEN");
-  findWordInString(word, dataWords?.TINH_THAI_TU_NGHI_VAN) &&
+  findWordInString(word, dataAboutWordTypes?.TINH_THAI_TU_NGHI_VAN) &&
     typeOfWord.types.push("TINH_THAI_TU_NGHI_VAN");
-  findWordInString(word, dataWords?.TINH_TU_CHI_CACH_THUC_MUC_DO) &&
+  findWordInString(word, dataAboutWordTypes?.TINH_TU_CHI_CACH_THUC_MUC_DO) &&
     typeOfWord.types.push("TINH_TU_CHI_CACH_THUC_MUC_DO");
   return typeOfWord;
 };
 
 const InputWords = () => {
-  const [words, setWords] = useState([""]);
-
+  const [words, setWords] = useState([]);
   // useState words
-  const [dataWords, setDataWords] = useState({});
-  const handleSelectChange = (value) => {
-    setWords(value);
-  };
-
+  const [dataAboutWordTypes, setDataAboutWordTypes] = useState({});
+  const [input, setInput] = useState("");
+  let resultAfterSortingWordByType = [];
   const handleClick = () => {
     for (let i = 0; i < words.length; ++i) {
-      const typesOfWord = findTypeOfWord(words[i], dataWords);
-      console.log(typesOfWord);
+      const typesOfWord = findTypeOfWord(words[i], dataAboutWordTypes);
+      resultAfterSortingWordByType.push(typesOfWord);
     }
+    // resultAfterSortingWordByType
+    ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+    // console.log("phraese: ", phraese)
+
+    resultAfterSortingWordByType = [];
   };
 
+  const handleDeleteAll = () => {
+    setWords([]);
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setWords(prevState => [...prevState, input]);
+      setInput("");
+    }
+  }
+
+  const handleDeleteWord = (id) => {
+    setWords(prevState => prevState.filter((elm, index) => index !== id))
+  }
+
+  // Fecth data from txt
   useEffect(() => {
     FetchData(DANH_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DANH_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DANH_TU: value.trim().split(", ") };
       })
     );
     FetchData(DONG_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DONG_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DONG_TU: value.trim().split(", ") };
       })
     );
     FetchData(TINH_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, TINH_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, TINH_TU: value.trim().split(", ") };
       })
     );
     FetchData(DAI_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DAI_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DAI_TU: value.trim().split(", ") };
       })
     );
     FetchData(DAI_TU_CHI_DINH).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DAI_TU_CHI_DINH: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DAI_TU_CHI_DINH: value.trim().split(", ") };
       })
     );
     FetchData(DANH_TU_CHI_TONG_LUONG).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DANH_TU_CHI_TONG_LUONG: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DANH_TU_CHI_TONG_LUONG: value.trim().split(", ") };
       })
     );
     FetchData(DANH_TU_LOAI_THE).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DANH_TU_LOAI_THE: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DANH_TU_LOAI_THE: value.trim().split(", ") };
       })
     );
     FetchData(DINH_TU_CHI_SO_LUONG).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DINH_TU_CHI_SO_LUONG: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DINH_TU_CHI_SO_LUONG: value.trim().split(", ") };
       })
     );
     FetchData(DON_VI_DO_LUONG).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, DON_VI_DO_LUONG: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, DON_VI_DO_LUONG: value.trim().split(", ") };
       })
     );
     FetchData(PHO_TU_DUNG_SAU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, PHO_TU_DUNG_SAU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, PHO_TU_DUNG_SAU: value.trim().split(", ") };
       })
     );
     FetchData(PHO_TU_DUNG_TRUOC).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, PHO_TU_DUNG_TRUOC: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, PHO_TU_DUNG_TRUOC: value.trim().split(", ") };
       })
     );
     FetchData(QUAN_HE_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, QUAN_HE_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, QUAN_HE_TU: value.trim().split(", ") };
       })
     );
     FetchData(SO_TU_CHO_SO_LUONG).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, SO_TU_CHO_SO_LUONG: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, SO_TU_CHO_SO_LUONG: value.trim().split(", ") };
       })
     );
     FetchData(THAN_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, THAN_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, THAN_TU: value.trim().split(", ") };
       })
     );
     FetchData(TINH_THAI_TU).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, TINH_THAI_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, TINH_THAI_TU: value.trim().split(", ") };
       })
     );
     FetchData(TINH_THAI_TU_CAU_KHIEN).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, TINH_THAI_TU_CAU_KHIEN: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, TINH_THAI_TU_CAU_KHIEN: value.trim().split(", ") };
       })
     );
     FetchData(TINH_THAI_TU_NGHI_VAN).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, TINH_THAI_TU: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, TINH_THAI_TU: value.trim().split(", ") };
       })
     );
     FetchData(TINH_TU_CHI_CACH_THUC_MUC_DO).then((value) =>
-      setDataWords((prevState) => {
-        return { ...prevState, TINH_TU_CHI_CACH_THUC_MUC_DO: value };
+      setDataAboutWordTypes((prevState) => {
+        return { ...prevState, TINH_TU_CHI_CACH_THUC_MUC_DO: value.trim().split(", ") };
       })
     );
   }, []);
 
   return (
-    <Col span={24} style={{ display: "flex", marginBottom: "20px" }}>
-      <Select
-        style={{ width: "100%" }}
-        mode="tags"
-        placeholder="Nhập các từ"
-        onChange={handleSelectChange}
-      />
-      <Button type="primary" onClick={handleClick}>
-        Sắp xếp
-      </Button>
-    </Col>
+    <>
+      <Col span={24} style={{ display: "flex", marginBottom: "20px" }}>
+        <div style={{width: "100%"}} >
+          <Input
+            style={{width: "100%"}}
+            onKeyPress={handleKeyPress}
+            onChange={e => setInput(e?.target?.value)}
+            value={input}
+          />
+          <div className="wrapper-tag">
+            <Row>
+              {words.map((word, index) => word && <Col span={4} style={{margin: "2px", marginTop: "10px"}}><Tag content={word} index={index} handleDeleteWord={handleDeleteWord} /></Col>)}
+            </Row>
+            <Button style={{marginTop: "20px"}} danger type="primary" onClick={handleDeleteAll}>Xóa tất cả</Button>
+          </div>
+        </div>
+        <Button type="primary" onClick={handleClick}>Sắp xếp</Button>
+      </Col>
+    </>
   );
 };
 
