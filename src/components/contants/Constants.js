@@ -19,27 +19,27 @@ export const Point = {
 export const RulesOfPhraese = {
     CUM_DANH_TU: [
         {
-            type: ["DAI_TU_CHI_TONG_LUONG"],
+            types: ["DAI_TU_CHI_TONG_LUONG"],
             value: "",
         },
         {
-            type: ["DINH_TU_CHI_SO_LUONG", "SO_TU_CHI_SO_LUONG"],
+            types: ["DINH_TU_CHI_SO_LUONG", "SO_TU_CHI_SO_LUONG"],
             value: "",
         },
         {
-            type: ["DANH_TU_LOAI_THE", "DANH_TU_CHI_DON_VI_DO_LUONG"],
+            types: ["DANH_TU_LOAI_THE", "DANH_TU_CHI_DON_VI_DO_LUONG"],
             value: "",
         },
         {
-            type: ["DANH_TU"],
+            types: ["DANH_TU"],
             value: "",
         },
         {
-            type: ["TINH_TU", "DONG_TU"],
+            types: ["TINH_TU", "DONG_TU"],
             value: "",
         },
         {
-            type: ["DAI_TU_CHI_DINH"],
+            types: ["DAI_TU_CHI_DINH"],
             value: "",
         }
     ],
