@@ -19,32 +19,26 @@ export const Point = {
 export const RulesOfPhraese = {
     CUM_DANH_TU: [
         {
-            index: 1,
             type: ["DAI_TU_CHI_TONG_LUONG"],
             value: "",
         },
         {
-            index: 2,
             type: ["DINH_TU_CHI_SO_LUONG", "SO_TU_CHI_SO_LUONG"],
             value: "",
         },
         {
-            index: 3,
             type: ["DANH_TU_LOAI_THE", "DANH_TU_CHI_DON_VI_DO_LUONG"],
             value: "",
         },
         {
-            index: 4,
             type: ["DANH_TU"],
             value: "",
         },
         {
-            index: 5,
             type: ["TINH_TU", "DONG_TU"],
             value: "",
         },
         {
-            index: 6,
             type: ["DAI_TU_CHI_DINH"],
             value: "",
         }
@@ -56,6 +50,10 @@ export const RulesOfPhraese = {
 
     ]
 }
+
+export const TYPE_BELONG_TO_NOUN = ["DAI_TU_CHI_TONG_LUONG", "DINH_TU_CHI_SO_LUONG", "SO_TU_CHI_SO_LUONG", "DANH_TU_LOAI_THE", "DANH_TU_CHI_DON_VI_DO_LUONG", "DANH_TU", "TINH_TU", "DONG_TU", "DAI_TU_CHI_DINH"]
+export const TYPE_BELONG_TO_VERB = []
+export const TYPE_BELONG_TO_ADJ = []
 
 export const RulesOfSentences = {
     

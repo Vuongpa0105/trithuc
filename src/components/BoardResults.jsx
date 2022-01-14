@@ -4,7 +4,7 @@ import { Col, Table } from "antd";
 const BoardResult = () => {
     const data = [
         {
-            sentence: "Câu tiếng việt nè!! <3",
+            sentence: "câu tiếng việt này",
             point: 100,
             key: 1,
         }

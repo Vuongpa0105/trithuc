@@ -27,8 +27,21 @@
     ....
   ]
 */
-
 import { RulesOfPhraese } from "../contants/Constants"
+
+
+
+const isBelongToNounPhrase = (couples) => {
+  couples.forEach(couple => {
+    
+  })
+}
+const isBelongToVerbPhrase = (couples) => {
+
+}
+const isBelongToAdjPhrase = (couples) => {
+
+} 
 
 const permutation = (list, n = 0, result = [], current = []) => {
   if (n === list.length) result.push(current)
@@ -37,29 +50,19 @@ const permutation = (list, n = 0, result = [], current = []) => {
 }
 
 export const ArrangeWordsIntoPhrases = (words) => {
-  const list = [];
+  let list = [];
   for (let i = 0; i < words.length; ++i) {
     list.push(words[i]?.types.map((ele, index) => ele + ", " + words[i]?.value))
   }
-  const b = permutation(list)
-  b.forEach(pemu => {
-    const rules = RulesOfPhraese
-    const converts = []
-    pemu.forEach(it => {
-      const i = it.split(", ")
-      converts.push(i)
+  let permus = permutation(list)
+  let ans = []
+  permus.forEach(permu => {
+    let couple = []
+    permu.forEach(it => {
+      let i = it.split(", ")
+      couple.push({type: i[0], value: i[1]})
     })
-    for (const property in rules) {
-      rules[property].forEach(elm => {
-        converts.forEach(con => {
-          if (elm?.type.includes(con[0])) {
-            elm.value = con[1]
-          }
-        })
-      })
-    }
-    console.log("rules: ", rules)
+    console.log(couple)
   })
-  
-  return;
+  console.log("ans: ", ans)
 }

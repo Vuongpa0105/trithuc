@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Input, Row } from "antd";
 import FetchData from "../data/FetchData";
 // Import txt file
@@ -10,7 +10,7 @@ import DAI_TU_CHI_DINH from "../data/daituchidinh.txt";
 import DANH_TU_CHI_TONG_LUONG from "../data/danhtuchitongluong.txt";
 import DANH_TU_LOAI_THE from "../data/danhtuloaithe.txt";
 import DINH_TU_CHI_SO_LUONG from "../data/dinhtuchisoluong.txt";
-import DON_VI_DO_LUONG from "../data/donvidoluong.txt";
+import DANH_TU_CHI_DON_VI_DO_LUONG from "../data/danhtuchidonvidoluong.txt";
 import PHO_TU_DUNG_SAU from "../data/photudungsau.txt";
 import PHO_TU_DUNG_TRUOC from "../data/photudungtruoc.txt";
 import QUAN_HE_TU from "../data/quanhetu.txt";
@@ -51,7 +51,7 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
   findWordInString(word, dataAboutWordTypes?.DINH_TU_CHI_SO_LUONG) &&
     typeOfWord.types.push("DINH_TU_CHI_SO_LUONG");
   findWordInString(word, dataAboutWordTypes?.DON_VI_DO_LUONG) &&
-    typeOfWord.types.push("DON_VI_DO_LUONG");
+    typeOfWord.types.push("DANH_TU_CHI_DON_VI_DO_LUONG");
   findWordInString(word, dataAboutWordTypes?.PHO_TU_DUNG_SAU) &&
     typeOfWord.types.push("PHO_TU_DUNG_SAU");
   findWordInString(word, dataAboutWordTypes?.PHO_TU_DUNG_TRUOC) &&
@@ -73,7 +73,7 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
   return typeOfWord;
 };
 
-const InputWords = () => {
+const InputWords = React.memo(() => {
   const [words, setWords] = useState([]);
   // useState words
   const [dataAboutWordTypes, setDataAboutWordTypes] = useState({});
@@ -81,13 +81,11 @@ const InputWords = () => {
   let resultAfterSortingWordByType = [];
   const handleClick = () => {
     for (let i = 0; i < words.length; ++i) {
-      const typesOfWord = findTypeOfWord(words[i], dataAboutWordTypes);
+      const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    // resultAfterSortingWordByType
+    console.log(resultAfterSortingWordByType)
     ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
-    // console.log("phraese: ", phraese)
-
     resultAfterSortingWordByType = [];
   };
 
@@ -100,6 +98,11 @@ const InputWords = () => {
       setWords(prevState => [...prevState, input]);
       setInput("");
     }
+  }
+
+  const handleClickAdd = (e) => {
+    setWords(prevState => [...prevState, input]);
+    setInput("");
   }
 
   const handleDeleteWord = (id) => {
@@ -148,7 +151,7 @@ const InputWords = () => {
         return { ...prevState, DINH_TU_CHI_SO_LUONG: value.trim().split(", ") };
       })
     );
-    FetchData(DON_VI_DO_LUONG).then((value) =>
+    FetchData(DANH_TU_CHI_DON_VI_DO_LUONG).then((value) =>
       setDataAboutWordTypes((prevState) => {
         return { ...prevState, DON_VI_DO_LUONG: value.trim().split(", ") };
       })
@@ -212,15 +215,16 @@ const InputWords = () => {
           />
           <div className="wrapper-tag">
             <Row>
-              {words.map((word, index) => word && <Col span={4} style={{margin: "2px", marginTop: "10px"}}><Tag content={word} index={index} handleDeleteWord={handleDeleteWord} /></Col>)}
+              {words.map((word, index) => word && <Col key={index} span={4} style={{margin: "2px", marginTop: "10px"}}><Tag content={word} index={index} handleDeleteWord={handleDeleteWord} /></Col>)}
             </Row>
             <Button style={{marginTop: "20px"}} danger type="primary" onClick={handleDeleteAll}>Xóa tất cả</Button>
+            <Button size="large" style={{marginTop: "20px", width: "100%"}} type="primary" onClick={handleClick} >Sắp xếp</Button>
           </div>
         </div>
-        <Button type="primary" onClick={handleClick}>Sắp xếp</Button>
+        <Button type="default" onClick={handleClickAdd}>Thêm</Button>
       </Col>
     </>
   );
-};
+});
 
 export default InputWords;
