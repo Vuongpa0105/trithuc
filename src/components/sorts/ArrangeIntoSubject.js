@@ -125,8 +125,29 @@ const VFirst = (couple) => {
         tmpFV.push(elm)
       }
     })
-    if (tmpAnsV["CHU_NGU"]) ans.push([tmpAnsC, tmpAnsV, ...tmpFV])
-    else ans.push([tmpAnsC, ...tmpFV])
+    if (tmpAnsV["CHU_NGU"]) {
+      let temp = {}
+      tmpFV.forEach(elm => {
+        if (elm.type === "DAI_TU") {
+          temp = elm
+        }
+      })
+      tmpFV = tmpFV.filter(elm => elm.type !== "DAI_TU")
+      if (temp.value) ans.push([temp, tmpAnsC, tmpAnsV, ...tmpFV])
+      else ans.push([tmpAnsC, tmpAnsV, ...tmpFV])
+    }
+    else {
+      let temp = {}
+      tmpFV.forEach(elm => {
+        if (elm.type === "DAI_TU") {
+          temp = elm
+        }
+      })
+      tmpFV = tmpFV.filter(elm => elm.type !== "DAI_TU")
+      if (temp.value) ans.push([temp, tmpAnsC, ...tmpFV])
+      else ans.push([tmpAnsC, ...tmpFV])
+      ans.push([tmpAnsC, ...tmpFV])
+    }
   })
   return ans
 }

@@ -88,7 +88,9 @@ const InputWords = React.memo(() => {
       resultAfterSortingWordByType.push(typesOfWord);
     }
     const a  = ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+    console.log("a: ", a)
     const b = arrangeIntoSubject(a)
+    console.log("b: ", b)
     ArrangeThePhraeseIntoSentences(b)
     resultAfterSortingWordByType = [];
   };
