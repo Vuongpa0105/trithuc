@@ -100,43 +100,35 @@ export const RulesOfPhraese = {
 
 export const RulesOfC = [
   {
-    types: ["DANH_TU"],
-    value: "",
+    type: "DANH_TU",
     point: 5,
   },
   {
-    types: ["DANH_NGU"],
-    value: "",
+    type: "CUM_DANH_TU",
     point: 5,
   },
   {
-    types: ["DAI_TU"],
-    value: "",
+    type: "DAI_TU",
     point: 3,
   },
   {
-    types: ["TINH_TU"],
-    value: "",
+    type: "TINH_TU",
     point: 3,
   },
   {
-    types: ["TINH_NGU"],
-    value: "",
+    type: "CUM_TINH_TU",
     point: 3,
   },
   {
-    types: ["DONG_TU"],
-    value: "",
+    type: "DONG_TU",
     point: 3,
   },
   {
-    types: ["DONG_NGU"],
-    value: "",
+    type: "CUM_DONG_TU",
     point: 3,
   },
   {
     types: ["SO_TU"],
-    value: "",
     point: 3,
   },
 ];
@@ -150,7 +142,7 @@ export const RulesOfV = [
   },
   {
     prevWord: "",
-    types: ["DANH_NGU"],
+    types: ["CUM_DANH_TU"],
     value: "",
     point: 5,
   },
@@ -162,7 +154,7 @@ export const RulesOfV = [
   },
   {
     prevWord: "là",
-    types: ["DANH_NGU"],
+    types: ["CUM_DANH_TU"],
     value: "",
     point: 5,
   },
@@ -174,7 +166,7 @@ export const RulesOfV = [
   },
   {
     prevWord: "",
-    types: ["TINH_NGU"],
+    types: ["CUM_TINH_TU"],
     value: "",
     point: 3,
   },
@@ -186,7 +178,7 @@ export const RulesOfV = [
   },
   {
     prevWord: "là",
-    types: ["TINH_NGU"],
+    types: ["CUM_TINH_TU"],
     value: "",
     point: 3,
   },
@@ -198,7 +190,7 @@ export const RulesOfV = [
   },
   {
     prevWord: "",
-    types: ["DONG_NGU"],
+    types: ["CUM_DONG_TU"],
     value: "",
     point: 3,
   },

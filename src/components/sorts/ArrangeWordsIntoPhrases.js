@@ -29,7 +29,7 @@
 */
 import { Point, RulesOfPhraese } from "../contants/Constants";
 
-const permutation = (list, n = 0, result = [], current = []) => {
+export const permutation = (list, n = 0, result = [], current = []) => {
   if (n === list.length) result.push(current);
   else
     list[n].forEach((item) =>
