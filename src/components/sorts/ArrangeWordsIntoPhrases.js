@@ -68,8 +68,10 @@ export const ArrangeWordsIntoPhrases = (words) => {
   const rules = RulesOfPhraese
   const addV = [] // Xóa phần tử trùng sau khi tạo cụm từ
   permus.forEach(permu => {
+    let arrHasValue = [] // Mảng chứa những value đã được push vào trong array ans để sau đó thêm lại những value không thẻ ghép thành cụm từ
     let couple = []
     let f = false
+    let f5 = false // Cờ đánh dấu hoán vị này có được push dữ liệu vào mảng kết quả hay không
     permu.forEach(elm => {
       let i = elm.split(", ")
       couple.push({type: i[0], value: i[1]})
@@ -106,7 +108,12 @@ export const ArrangeWordsIntoPhrases = (words) => {
             tmp = tmp + result.values[property].value + "-"
           }
           if (!addV.includes(tmp)) {
+            f5 = true
             ans.push([result])
+            // thêm những value được push vào result array into arrHasvalue
+            for (let property in result.values) {
+              arrHasValue.push(result.values[property].value)
+            }
             let point = 0
             for (let property in result.values) {
               point += Point[property]
@@ -117,11 +124,14 @@ export const ArrangeWordsIntoPhrases = (words) => {
         }
       }
     }
-    console.log("words: ", words)
-    console.log("ans: ", ans)
     // gán lại các từ không thể xếp thành cụm từ vào mảng kết quả
-    
+    if (f5) {
+      words.forEach(word => {
+        if (!arrHasValue.includes(word.value)) {
+          ans[ans.length - 1].push(word)
+        }
+      })
+    }
   })
-
   console.log(ans)
 }

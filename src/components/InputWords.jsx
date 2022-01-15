@@ -107,8 +107,8 @@ const InputWords = React.memo(() => {
               "TINH_TU"
           ]
       }
-  ]
-    const a = ArrangeWordsIntoPhrases(data)
+    ]
+    ArrangeWordsIntoPhrases(data)
     resultAfterSortingWordByType = [];
   };
 
