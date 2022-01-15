@@ -58,13 +58,25 @@ const checkValueInWords = (value, ans) => {
   return f
 }
 
-export const ArrangeWordsIntoPhrases = (words) => {
+const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
+  if (ans.length) {
+    words.length = 0
+    ans.forEach(elm => {
+      elm.forEach(elm2 => {
+        if (elm2.types) {
+          words.push(elm2)
+        }
+      })
+    })
+    ans.forEach(elm => {
+      elm.filter(e => !e.types)
+    })
+  }
   let list = [];
   for (let i = 0; i < words.length; ++i) {
-    list.push(words[i]?.types.map((ele, index) => ele + ", " + words[i]?.value))
+    list.push(words[i]?.types.map(ele => ele + ", " + words[i]?.value))
   }
   let permus = permutation(list) // Sinh hoán vị array 2D
-  let ans = []
   const rules = RulesOfPhraese
   const addV = [] // Xóa phần tử trùng sau khi tạo cụm từ
   permus.forEach(permu => {
@@ -77,17 +89,17 @@ export const ArrangeWordsIntoPhrases = (words) => {
       couple.push({type: i[0], value: i[1]})
     })
     couple.forEach(elm => {
-      if (elm.type === "DANH_TU") f = true
+      if (elm.type === TYPE_PHRASE.slice(4, TYPE_PHRASE.length)) f = true
     })
     // f đánh dấu nếu có một từ thuộc loại danh từ thì mới xét xếp vào cụm danh từ, tương tự với động từ và tính từ
     if (f) {
       let result = {type: "", point: 0, values: {}}
       let arrF = [] // Mảng đánh dấu value đã được thêm vào result chưa
-      rules.CUM_DANH_TU.forEach((elm, index) => {
+      rules[TYPE_PHRASE].forEach((elm, index) => {
         couple.forEach(haf => {
           if (elm.types.includes(haf.type) && !arrF.includes(haf.value) && !result.hasOwnProperty(haf.type)) {
             arrF.push(haf.value)
-            result.type = "CUM_DANH_TU"
+            result.type = TYPE_PHRASE
             result.values[haf.type] = {value: haf.value, index: index}
           }
         })
@@ -124,7 +136,7 @@ export const ArrangeWordsIntoPhrases = (words) => {
         }
       }
     }
-    // gán lại các từ không thể xếp thành cụm từ vào mảng kết quả
+ 
     if (f5) {
       words.forEach(word => {
         if (!arrHasValue.includes(word.value)) {
@@ -133,5 +145,13 @@ export const ArrangeWordsIntoPhrases = (words) => {
       })
     }
   })
+  return ans
+}
+
+export const ArrangeWordsIntoPhrases = (words) => {
+  let ans = []
+  for (let property in RulesOfPhraese) {
+    ans = ArrangeWordsIntoPhrasesDetail(property, words, ans)
+  }
   console.log(ans)
 }
