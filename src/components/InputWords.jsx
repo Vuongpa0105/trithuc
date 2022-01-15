@@ -84,8 +84,31 @@ const InputWords = React.memo(() => {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    console.log(resultAfterSortingWordByType)
-    ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+    const data = [
+      {
+          "value": "con",
+          "types": [
+              "DANH_TU",
+              "TINH_TU",
+              "DAI_TU",
+              "DANH_TU_LOAI_THE"
+          ]
+      },
+      {
+          "value": "gà",
+          "types": [
+              "DANH_TU",
+              "DONG_TU"
+          ]
+      },
+      {
+          "value": "xấu",
+          "types": [
+              "TINH_TU"
+          ]
+      }
+  ]
+    const a = ArrangeWordsIntoPhrases(data)
     resultAfterSortingWordByType = [];
   };
 
@@ -108,6 +131,8 @@ const InputWords = React.memo(() => {
   const handleDeleteWord = (id) => {
     setWords(prevState => prevState.filter((elm, index) => index !== id))
   }
+
+  
 
   // Fecth data from txt
   useEffect(() => {
