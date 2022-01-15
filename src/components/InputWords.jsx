@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Input, Row } from "antd";
+import { Alert, Button, Col, Input, Row } from "antd";
 import FetchData from "../data/FetchData";
 // Import txt file
 import TINH_TU from "../data/tinhtu.txt";
@@ -77,21 +77,69 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
 };
 
 const InputWords = React.memo(() => {
+  const [visible, setVisible] = useState(false);
+  const handleClose = () => {
+    setVisible(false);
+    setDescription("");
+  };
   const [words, setWords] = useState([]);
   // useState words
   const [dataAboutWordTypes, setDataAboutWordTypes] = useState({});
   const [input, setInput] = useState("");
+  const [description, setDescription] = useState("");
   let resultAfterSortingWordByType = [];
+
   const handleClick = () => {
+    //Kich ban 2: chua nhap du lieu
+    if (words.length === 0) {
+      setDescription("Bạn chưa nhập dữ liệu!!");
+      setVisible(true);
+    }
+
+    //kich ban 3:
+    const kq = [];
+    for (let i = 0; i < words.length; i++) {
+      if (words.filter((x) => x === words[i]).length > 3) {
+        setVisible(true);
+        setDescription("Không nhập 1 từ quá 3 lần!");
+      }
+    }
+
+    //Kich ban 5: nhap qua 10 tu
+    if (words.length >= 10) {
+      setDescription("Không được nhập quá 10 từ!");
+      setVisible(true);
+    }
+
+    //Kich ban 6: co nhap dau
+    for (let i = 0; i < words.length; i++) {
+      for (let j = 0; j < words[i].length; j++)
+        if (
+          (words[i].charCodeAt(j) > 90 && words[i].charCodeAt(j) < 97) ||
+          (words[i].charCodeAt(j) > 32 && words[i].charCodeAt(j) < 48) ||
+          (words[i].charCodeAt(j) > 57 && words[i].charCodeAt(j) < 65) ||
+          words[i].charCodeAt(j) > 122
+        ) {
+          setDescription("Không tìm thấy dữ liệu. Không được nhập dấu!");
+          setVisible(true);
+        }
+    }
+
     for (let i = 0; i < words.length; ++i) {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    const a  = ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
-    console.log("a: ", a)
-    const b = arrangeIntoSubject(a)
-    console.log("b: ", b)
-    ArrangeThePhraeseIntoSentences(b)
+
+    //Kich ban 4: tu nhap vao khong co trong data
+    for (let i = 0; i < resultAfterSortingWordByType.length; i++) {
+      if (resultAfterSortingWordByType[i].types.length === 0) {
+        setDescription("Không tìm thấy dữ liệu trong từ điển!");
+        setVisible(true);
+      }
+    }
+    const a = ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
+    const b = arrangeIntoSubject(a);
+    ArrangeThePhraeseIntoSentences(b);
     resultAfterSortingWordByType = [];
   };
 
@@ -108,6 +156,7 @@ const InputWords = React.memo(() => {
 
   const handleClickAdd = (e) => {
     setWords((prevState) => [...prevState, input]);
+
     setInput("");
   };
 
@@ -220,6 +269,19 @@ const InputWords = React.memo(() => {
 
   return (
     <>
+      <div style={{ position: "relative" }}>
+        {visible ? (
+          <Alert
+            message="Cảnh báo"
+            description={description}
+            type="error"
+            style={{ width: 450, position: "absolute", top: -205 }}
+            showIcon
+            closable
+            afterClose={handleClose}
+          />
+        ) : null}
+      </div>
       <Col span={24} style={{ display: "flex", marginBottom: "20px" }}>
         <div style={{ width: "100%" }}>
           <Input
@@ -274,6 +336,7 @@ const InputWords = React.memo(() => {
           Thêm
         </Button>
       </Col>
+      ;
     </>
   );
 });
