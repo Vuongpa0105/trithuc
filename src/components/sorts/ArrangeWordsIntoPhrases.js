@@ -142,7 +142,9 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
 };
 
 export const ArrangeWordsIntoPhrases = (words) => {
+  console.log("words: ", words)
   let ans = [];
+  
   for (let property in RulesOfPhraese) {
     ans = ArrangeWordsIntoPhrasesDetail(property, words, ans);
   }

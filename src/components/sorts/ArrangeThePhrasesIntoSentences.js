@@ -12,13 +12,19 @@ export const ArrangeThePhraeseIntoSentences = (data) => {
       }
     })
     elm.forEach(elm2 => {
+      if (elm2.value === "là") {
+        tmp.value += (elm2.value + " ")
+        tmp.point += 7
+      }
+    })
+    elm.forEach(elm2 => {
       if (elm2["VI_NGU"]) {
         tmp.value += (elm2["VI_NGU"].value + " ")
         tmp.point += elm2["VI_NGU"].point
       }
     })
     elm.forEach(elm2 => {
-      if (!elm2["VI_NGU"] && !elm2["CHU_NGU"]) {
+      if (!elm2["VI_NGU"] && !elm2["CHU_NGU"] && elm2.value !== "là") {
         tmp.value += (elm2.value + " ")
         tmp.point += elm2.point
       }

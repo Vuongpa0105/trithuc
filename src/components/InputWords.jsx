@@ -96,7 +96,7 @@ const InputWords = React.memo(({ handleSetData }) => {
       setVisible(true);
     }
 
-    //kich ban 3:
+    //kich ban 3: Không nhập 1 từ quá 3 lần!
     const kq = [];
     for (let i = 0; i < words.length; i++) {
       if (words.filter((x) => x === words[i]).length > 3) {
@@ -123,12 +123,12 @@ const InputWords = React.memo(({ handleSetData }) => {
           setVisible(true);
         }
     }
-
+    
     for (let i = 0; i < words.length; ++i) {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-
+    
     //Kich ban 4: tu nhap vao khong co trong data
     for (let i = 0; i < resultAfterSortingWordByType.length; i++) {
       if (resultAfterSortingWordByType[i].types.length === 0) {
@@ -136,9 +136,14 @@ const InputWords = React.memo(({ handleSetData }) => {
         setVisible(true);
       }
     }
+    
     const a = ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
     const b = arrangeIntoSubject(a);
     const c = ArrangeThePhraeseIntoSentences(b);
+    const length = words.length
+    c.filter(elm => {
+      return elm.value.split(", ").length === length
+    })
     handleSetData(c)
     resultAfterSortingWordByType = [];
   };
