@@ -23,6 +23,7 @@ import TINH_TU_CHI_CACH_THUC_MUC_DO from "../data/tinhtuchicachthucmucdo.txt";
 import Tag from "./Tag";
 import { ArrangeWordsIntoPhrases } from "./sorts/ArrangeWordsIntoPhrases";
 import { arrangeIntoSubject } from "./sorts/ArrangeIntoSubject";
+import { ArrangeThePhraeseIntoSentences } from "./sorts/ArrangeThePhrasesIntoSentences";
 
 export const findWordInString = (word, stringType = "") => {
   const position = stringType.indexOf(word);
@@ -87,7 +88,8 @@ const InputWords = React.memo(() => {
       resultAfterSortingWordByType.push(typesOfWord);
     }
     const a  = ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
-    arrangeIntoSubject(a)
+    const b = arrangeIntoSubject(a)
+    ArrangeThePhraeseIntoSentences(b)
     resultAfterSortingWordByType = [];
   };
 

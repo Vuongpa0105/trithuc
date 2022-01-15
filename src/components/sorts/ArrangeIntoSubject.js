@@ -24,6 +24,7 @@ const CFirst = (couple) => {
             f = true
             valueHas.push(tmp.value)
             tmpAnsC["CHU_NGU"] = tmp
+            tmpAnsC["CHU_NGU"].point = tmpAnsC["CHU_NGU"].point + rule.point
           }
         }
       })
@@ -33,20 +34,105 @@ const CFirst = (couple) => {
         tmpF.push(elm2)
       }
     })
-    // ans.push([tmpAnsC, ...tmpF])
 
     // xử lý vị ngữ
-    
-    
+    valueHas = []
+    let tmpFV = []
+    let tmpAnsV = {}
+    f = false
+    tmpF.forEach(elm => {
+      ruleV.forEach((rule, index) => {
+        if (elm.type === rule.type) {
+          let tmp = {}
+          tmp.index = index
+          tmp.type = elm.type
+          tmp.value = elm.value
+          tmp.point = elm.point ? elm.point : Point[elm.type]
+          if (!f) {
+            f = true
+            valueHas.push(tmp.value)
+            tmpAnsV["VI_NGU"] = tmp
+            tmpAnsV["VI_NGU"].point = tmpAnsV["VI_NGU"].point + rule.point
+          }
+        }
+      })
+      if (!valueHas.includes(elm.value)) {
+        elm.point = elm.point ? elm.point : Point[elm.type]
+        valueHas.push(elm.value)
+        tmpFV.push(elm)
+      }
+    })
+    if (tmpAnsV["VI_NGU"]) ans.push([tmpAnsC, tmpAnsV, ...tmpFV])
+    else ans.push([tmpAnsC, ...tmpFV])
   })
-  console.log("ans: ", ans)
+  return ans
 }
 
 const VFirst = (couple) => {
+  let ans = []
+  couple.forEach((elm, index) => {
+    let tmpAnsC = {}
+    let f = false
+    let tmpF = []
+    let valueHas = []
+    elm.forEach((elm2, index) => {
+      ruleC.forEach((rule, index) => {
+        if (elm2.type === rule.type) {
+          let tmp = {}
+          tmp.index = index
+          tmp.type = elm2.type
+          tmp.value = elm2.value
+          tmp.point = elm2.point ? elm2.point : Point[elm2.type]
+          if (!f) {
+            f = true
+            valueHas.push(tmp.value)
+            tmpAnsC["VI_NGU"] = tmp
+            tmpAnsC["VI_NGU"].point = tmpAnsC["VI_NGU"].point + rule.point
+          }
+        }
+      })
+      if (!valueHas.includes(elm2.value)) {
+        elm2.point = elm2.point ? elm2.point : Point[elm2.type]
+        valueHas.push(elm2.value)
+        tmpF.push(elm2)
+      }
+    })
 
+    // xử lý chủ ngữ
+    valueHas = []
+    let tmpFV = []
+    let tmpAnsV = {}
+    f = false
+    tmpF.forEach(elm => {
+      ruleV.forEach((rule, index) => {
+        if (elm.type === rule.type) {
+          let tmp = {}
+          tmp.index = index
+          tmp.type = elm.type
+          tmp.value = elm.value
+          tmp.point = elm.point ? elm.point : Point[elm.type]
+          if (!f) {
+            f = true
+            valueHas.push(tmp.value)
+            tmpAnsV["CHU_NGU"] = tmp
+            tmpAnsV["CHU_NGU"].point = tmpAnsV["CHU_NGU"].point + rule.point
+          }
+        }
+      })
+      if (!valueHas.includes(elm.value)) {
+        elm.point = elm.point ? elm.point : Point[elm.type]
+        valueHas.push(elm.value)
+        tmpFV.push(elm)
+      }
+    })
+    if (tmpAnsV["CHU_NGU"]) ans.push([tmpAnsC, tmpAnsV, ...tmpFV])
+    else ans.push([tmpAnsC, ...tmpFV])
+  })
+  return ans
 }
 
 export const arrangeIntoSubject = (phrase) => {
+  let ans = []
   phrase.forEach(elm => { 
     let couple = []
     elm.forEach(e => {
@@ -80,6 +166,7 @@ export const arrangeIntoSubject = (phrase) => {
         return i
       })
     })
-    CFirst(b)
+    ans = [...ans, ...CFirst(b), ...VFirst(b)]
   })
+  return ans
 }
