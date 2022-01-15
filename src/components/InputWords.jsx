@@ -41,7 +41,8 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
     typeOfWord.types.push("DONG_TU");
   findWordInString(word, dataAboutWordTypes?.TINH_TU) &&
     typeOfWord.types.push("TINH_TU");
-  findWordInString(word, dataAboutWordTypes?.DAI_TU) && typeOfWord.types.push("DAI_TU");
+  findWordInString(word, dataAboutWordTypes?.DAI_TU) &&
+    typeOfWord.types.push("DAI_TU");
   findWordInString(word, dataAboutWordTypes?.DAI_TU_CHI_DINH) &&
     typeOfWord.types.push("DAI_TU_CHI_DINH");
   findWordInString(word, dataAboutWordTypes?.DANH_TU_CHI_TONG_LUONG) &&
@@ -86,53 +87,41 @@ const InputWords = React.memo(() => {
     }
     const data = [
       {
-          "value": "con",
-          "types": [
-              "DANH_TU",
-              "TINH_TU",
-              "DAI_TU",
-              "DANH_TU_LOAI_THE"
-          ]
+        value: "con",
+        types: ["DANH_TU", "TINH_TU", "DAI_TU", "DANH_TU_LOAI_THE"],
       },
       {
-          "value": "gà",
-          "types": [
-              "DANH_TU",
-              "DONG_TU"
-          ]
+        value: "gà",
+        types: ["DANH_TU", "DONG_TU"],
       },
       {
-          "value": "xấu",
-          "types": [
-              "TINH_TU"
-          ]
-      }
-    ]
-    ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+        value: "xấu",
+        types: ["TINH_TU"],
+      },
+    ];
+    ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
     resultAfterSortingWordByType = [];
   };
 
   const handleDeleteAll = () => {
     setWords([]);
-  }
+  };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      setWords(prevState => [...prevState, input]);
+    if (e.key === "Enter") {
+      setWords((prevState) => [...prevState, input]);
       setInput("");
     }
-  }
+  };
 
   const handleClickAdd = (e) => {
-    setWords(prevState => [...prevState, input]);
+    setWords((prevState) => [...prevState, input]);
     setInput("");
-  }
+  };
 
   const handleDeleteWord = (id) => {
-    setWords(prevState => prevState.filter((elm, index) => index !== id))
-  }
-
-  
+    setWords((prevState) => prevState.filter((elm, index) => index !== id));
+  };
 
   // Fecth data from txt
   useEffect(() => {
@@ -163,7 +152,10 @@ const InputWords = React.memo(() => {
     );
     FetchData(DANH_TU_CHI_TONG_LUONG).then((value) =>
       setDataAboutWordTypes((prevState) => {
-        return { ...prevState, DANH_TU_CHI_TONG_LUONG: value.trim().split(", ") };
+        return {
+          ...prevState,
+          DANH_TU_CHI_TONG_LUONG: value.trim().split(", "),
+        };
       })
     );
     FetchData(DANH_TU_LOAI_THE).then((value) =>
@@ -213,7 +205,10 @@ const InputWords = React.memo(() => {
     );
     FetchData(TINH_THAI_TU_CAU_KHIEN).then((value) =>
       setDataAboutWordTypes((prevState) => {
-        return { ...prevState, TINH_THAI_TU_CAU_KHIEN: value.trim().split(", ") };
+        return {
+          ...prevState,
+          TINH_THAI_TU_CAU_KHIEN: value.trim().split(", "),
+        };
       })
     );
     FetchData(TINH_THAI_TU_NGHI_VAN).then((value) =>
@@ -223,7 +218,10 @@ const InputWords = React.memo(() => {
     );
     FetchData(TINH_TU_CHI_CACH_THUC_MUC_DO).then((value) =>
       setDataAboutWordTypes((prevState) => {
-        return { ...prevState, TINH_TU_CHI_CACH_THUC_MUC_DO: value.trim().split(", ") };
+        return {
+          ...prevState,
+          TINH_TU_CHI_CACH_THUC_MUC_DO: value.trim().split(", "),
+        };
       })
     );
   }, []);
@@ -231,22 +229,58 @@ const InputWords = React.memo(() => {
   return (
     <>
       <Col span={24} style={{ display: "flex", marginBottom: "20px" }}>
-        <div style={{width: "100%"}} >
+        <div style={{ width: "100%" }}>
           <Input
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
             onKeyPress={handleKeyPress}
-            onChange={e => setInput(e?.target?.value)}
+            onChange={(e) => setInput(e?.target?.value)}
             value={input}
           />
           <div className="wrapper-tag">
             <Row>
-              {words.map((word, index) => word && <Col key={index} span={4} style={{margin: "2px", marginTop: "10px"}}><Tag content={word} index={index} handleDeleteWord={handleDeleteWord} /></Col>)}
+              {words.map(
+                (word, index) =>
+                  word && (
+                    <Col
+                      key={index}
+                      span={4}
+                      style={{ margin: "2px", marginTop: "10px" }}
+                    >
+                      <Tag
+                        content={word}
+                        index={index}
+                        handleDeleteWord={handleDeleteWord}
+                      />
+                    </Col>
+                  )
+              )}
             </Row>
-            <Button style={{marginTop: "20px"}} danger type="primary" onClick={handleDeleteAll}>Xóa tất cả</Button>
-            <Button size="large" style={{marginTop: "20px", width: "100%"}} type="primary" onClick={handleClick} >Sắp xếp</Button>
+            <Row>
+              <Col span={6}>
+                <Button
+                  style={{ marginTop: "20px", width: "100%" }}
+                  danger
+                  type="primary"
+                  onClick={handleDeleteAll}
+                >
+                  Xóa tất cả
+                </Button>
+              </Col>
+              <Col span={6} offset={1}>
+                <Button
+                  style={{ marginTop: "20px", width: "100%" }}
+                  type="primary"
+                  onClick={handleClick}
+                >
+                  Sắp xếp
+                </Button>
+              </Col>
+            </Row>
           </div>
         </div>
-        <Button type="default" onClick={handleClickAdd}>Thêm</Button>
+        <Button type="primary" onClick={handleClickAdd}>
+          Thêm
+        </Button>
       </Col>
     </>
   );
