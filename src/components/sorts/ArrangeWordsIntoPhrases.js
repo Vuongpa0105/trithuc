@@ -27,7 +27,7 @@
     ....
   ]
 */
-import { Point, RulesOfPhraese } from "../contants/Constants"
+import { Point, RulesOfPhraese } from "../contants/Constants";
 
 const permutation = (list, n = 0, result = [], current = []) => {
   if (n === list.length) result.push(current);
@@ -89,12 +89,12 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
         });
       });
 
+      // Loại bỏ những cụm từ chỉ được tạo bởi một từ
       if (Object.keys(result.values).length > 1) {
         const addI = new Array(10).fill(0);
         let f2 = true;
         for (let property in result.values) {
           addI[result.values[property].index]++;
-          // Loại bỏ những cụm từ chỉ được tạo bởi một từ
           if (addI[result.values[property].index] > 1) f2 = false;
         }
         if (f2) {
@@ -127,6 +127,7 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
           ans[ans.length - 1].push(word);
         }
       });
+      // console.log(ans, "ans.............");
     }
   });
   return ans;
@@ -137,5 +138,6 @@ export const ArrangeWordsIntoPhrases = (words) => {
   for (let property in RulesOfPhraese) {
     ans = ArrangeWordsIntoPhrasesDetail(property, words, ans);
   }
-  return ans
-}
+  console.log(ans, "ans.......");
+  return ans;
+};

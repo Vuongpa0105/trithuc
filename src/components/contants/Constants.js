@@ -15,7 +15,10 @@ export const Point = {
   DAI_TU: 2,
   THAN_TU: 1,
   TINH_TU_CHI_CACH_THU_MUC_DO: 2,
+  TINH_THAI_TU_CAU_KHIEN: 2,
+  TINH_THAI_TU_NGHI_VAN: 2,
   QUAN_HE_TU: 1,
+  DAI_TU_CHI_DINH: 1,
 };
 
 export const RulesOfPhraese = {
