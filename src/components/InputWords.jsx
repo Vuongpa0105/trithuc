@@ -85,21 +85,7 @@ const InputWords = React.memo(() => {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    const data = [
-      {
-        value: "con",
-        types: ["DANH_TU", "TINH_TU", "DAI_TU", "DANH_TU_LOAI_THE"],
-      },
-      {
-        value: "gà",
-        types: ["DANH_TU", "DONG_TU"],
-      },
-      {
-        value: "xấu",
-        types: ["TINH_TU"],
-      },
-    ];
-    ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
+    ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
     resultAfterSortingWordByType = [];
   };
 

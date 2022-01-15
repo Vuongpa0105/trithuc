@@ -27,14 +27,7 @@
     ....
   ]
 */
-import { waitForElementToBeRemoved } from "@testing-library/react";
-import { Point, RulesOfPhraese } from "../contants/Constants";
-
-const isBelongToNounPhrase = (couples) => {
-  couples.forEach((couple) => {});
-};
-const isBelongToVerbPhrase = (couples) => {};
-const isBelongToAdjPhrase = (couples) => {};
+import { Point, RulesOfPhraese } from "../contants/Constants"
 
 const permutation = (list, n = 0, result = [], current = []) => {
   if (n === list.length) result.push(current);
@@ -43,16 +36,6 @@ const permutation = (list, n = 0, result = [], current = []) => {
       permutation(list, n + 1, result, [...current, item])
     );
   return result;
-};
-
-const checkValueInWords = (value, ans) => {
-  let f = false;
-  ans.forEach((a) => {
-    for (let property in a.values) {
-      if (a.values[property].value === value) return true;
-    }
-  });
-  return f;
 };
 
 const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
@@ -154,5 +137,5 @@ export const ArrangeWordsIntoPhrases = (words) => {
   for (let property in RulesOfPhraese) {
     ans = ArrangeWordsIntoPhrasesDetail(property, words, ans);
   }
-  console.log(ans);
-};
+  return ans
+}

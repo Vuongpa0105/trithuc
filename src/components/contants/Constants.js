@@ -5,6 +5,8 @@ export const Point = {
   DANH_TU_CHI_DON_VI_DO_LUONG: 2,
   DANH_TU_CHI_DINH: 2,
   PHO_TU: 1,
+  PHO_TU_DUNG_SAU: 1,
+  PHO_TU_DUNG_TRUOC: 1,
   SO_TU_CHI_SO_LUONG: 2,
   DANH_TU_LOAI_THE: 2,
   DANN_TU_CHI_TONG_LUONG: 2,
@@ -68,10 +70,6 @@ export const RulesOfPhraese = {
       types: ["DANH_TU"],
       value: "",
     },
-    {
-      types: ["DONG_TU"],
-      value: "",
-    },
   ],
   CUM_TINH_TU: [
     {
@@ -80,10 +78,6 @@ export const RulesOfPhraese = {
     },
     {
       types: ["DONG_TU"],
-      value: "",
-    },
-    {
-      types: ["TINH_TU"],
       value: "",
     },
     {
