@@ -127,7 +127,6 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
           ans[ans.length - 1].push(word);
         }
       });
-      // console.log(ans, "ans.............");
     }
   });
   return ans;
@@ -138,6 +137,5 @@ export const ArrangeWordsIntoPhrases = (words) => {
   for (let property in RulesOfPhraese) {
     ans = ArrangeWordsIntoPhrasesDetail(property, words, ans);
   }
-  console.log(ans, "ans.......");
   return ans;
 };

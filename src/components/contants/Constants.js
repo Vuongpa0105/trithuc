@@ -98,6 +98,18 @@ export const RulesOfPhraese = {
   ],
 };
 
+export const RulesOfC = {
+
+}
+
+export const RulesOfV = {
+
+}
+
+export const RulesOfT = {
+  
+}
+
 export const TYPE_BELONG_TO_NOUN = [
   "DAI_TU_CHI_TONG_LUONG",
   "DINH_TU_CHI_SO_LUONG",

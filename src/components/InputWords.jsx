@@ -85,7 +85,8 @@ const InputWords = React.memo(() => {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+    const a  = ArrangeWordsIntoPhrases(resultAfterSortingWordByType)
+    console.log(a)
     resultAfterSortingWordByType = [];
   };
 
