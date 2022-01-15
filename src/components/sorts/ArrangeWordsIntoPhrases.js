@@ -1,32 +1,3 @@
-/* 
-
-- Đầu vào của hàm ArrangeWordsIntoPhrases:
-  [ { types: [], value: "" }, ... ]
-
-- Kết quả mong muốn sau khi chạy hàm ArrangeWordsIntoPhrases:
-  [
-    {
-      POINT: 100,
-      result: {
-                CUM_DANH_TU: [
-                  {
-                        index: 1,
-                        type: ["DAI_TU_CHI_TONG_LUONG"],
-                        value: "",
-                    },
-                    ...
-                ],
-                CUM_DONG_TU: [
-
-                ],
-                CUM_TINH_TU: [
-
-                ]
-              }
-    },
-    ....
-  ]
-*/
 import { Point, RulesOfPhraese } from "../contants/Constants";
 
 export const permutation = (list, n = 0, result = [], current = []) => {
@@ -37,6 +8,19 @@ export const permutation = (list, n = 0, result = [], current = []) => {
     );
   return result;
 };
+
+const sortByPosition = obj => {
+  const order = [], res = [];
+  Object.keys(obj).forEach(key => {
+     return order[obj[key].index - 1] = key;
+  });
+  order.forEach(key => {
+     res[key] = obj[key];
+  });
+  console.log("SORT_FUNC:", res);
+  return res;
+}
+
 
 const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
   if (ans.length) {
@@ -129,6 +113,31 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
       });
     }
   });
+  ans.forEach(elm => {
+    elm.forEach(elm2 => {
+      if ((elm2.type === "CUM_DANH_TU") || (elm2.type === "CUM_DONG_TU") || (elm2.type === "CUM_TINH_TU")) {
+        const a = elm2.values
+        const flatArr = Object.entries(a); 
+        flatArr.sort((v1, v2) => v1[1].index - v2[1].index);
+        const resObj = {};
+        const arr = []
+        const arrKey = []
+        for(let i = 0; i < flatArr.length; i++) {
+          const key = flatArr[i][0];
+          const val = flatArr[i][1];
+          resObj[key] = val;
+          arr.push(val)
+          arrKey.push(key)
+        }
+        const objAns = {}
+        for (let i = arr.length - 1; i >= 0; --i) {
+          objAns[arrKey[i]] = arr[i]
+        }
+        elm2.values = objAns
+      }
+    })
+  })
+  
   return ans;
 };
 
@@ -139,3 +148,5 @@ export const ArrangeWordsIntoPhrases = (words) => {
   }
   return ans;
 };
+
+

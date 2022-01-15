@@ -36,5 +36,5 @@ export const ArrangeThePhraeseIntoSentences = (data) => {
     return 0;
   }
   ans = ans.sort( compare );
-  console.log("ans: ", ans)
+  return ans
 }

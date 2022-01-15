@@ -1,25 +1,14 @@
 import React from "react";
 import { Col, Table } from "antd";
 
-const BoardResult = () => {
-    const data = [
-        {
-            sentence: "câu tiếng việt này",
-            point: 100,
-            key: 1,
-        }
-    ];
-
+const BoardResult = ({ data }) => {
+    console.log("data: ", data)
+    data.length = 10
     const columns = [
         {
-            title: "STT",
-            dataIndex: "key",
-            render: (_, record) => record.key,
-        },
-        {
             title: "Câu đã sắp xếp",
-            dataIndex: "sentence",
-            render: (_, record) => record.sentence,
+            dataIndex: "value",
+            render: (_, record) => record.value,
         },
         {
             title: "Điểm",

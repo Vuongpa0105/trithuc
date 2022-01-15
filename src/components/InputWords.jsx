@@ -76,7 +76,7 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
   return typeOfWord;
 };
 
-const InputWords = React.memo(() => {
+const InputWords = React.memo(({ handleSetData }) => {
   const [visible, setVisible] = useState(false);
   const handleClose = () => {
     setVisible(false);
@@ -117,8 +117,7 @@ const InputWords = React.memo(() => {
         if (
           (words[i].charCodeAt(j) > 90 && words[i].charCodeAt(j) < 97) ||
           (words[i].charCodeAt(j) > 32 && words[i].charCodeAt(j) < 48) ||
-          (words[i].charCodeAt(j) > 57 && words[i].charCodeAt(j) < 65) ||
-          words[i].charCodeAt(j) > 122
+          (words[i].charCodeAt(j) > 57 && words[i].charCodeAt(j) < 65)
         ) {
           setDescription("Không tìm thấy dữ liệu. Không được nhập dấu!");
           setVisible(true);
@@ -139,7 +138,8 @@ const InputWords = React.memo(() => {
     }
     const a = ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
     const b = arrangeIntoSubject(a);
-    ArrangeThePhraeseIntoSentences(b);
+    const c = ArrangeThePhraeseIntoSentences(b);
+    handleSetData(c)
     resultAfterSortingWordByType = [];
   };
 
