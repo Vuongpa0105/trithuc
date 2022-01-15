@@ -98,17 +98,118 @@ export const RulesOfPhraese = {
   ],
 };
 
-export const RulesOfC = {
+export const RulesOfC = [
+  {
+    types: ["DANH_TU"],
+    value: "",
+    point: 5,
+  },
+  {
+    types: ["DANH_NGU"],
+    value: "",
+    point: 5,
+  },
+  {
+    types: ["DAI_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["TINH_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["TINH_NGU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["DONG_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["DONG_NGU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["SO_TU"],
+    value: "",
+    point: 3,
+  },
+];
 
-}
+export const RulesOfV = [
+  {
+    prevWord: "",
+    types: ["DANH_TU"],
+    value: "",
+    point: 5,
+  },
+  {
+    prevWord: "",
+    types: ["DANH_NGU"],
+    value: "",
+    point: 5,
+  },
+  {
+    prevWord: "là",
+    types: ["DANH_TU"],
+    value: "",
+    point: 5,
+  },
+  {
+    prevWord: "là",
+    types: ["DANH_NGU"],
+    value: "",
+    point: 5,
+  },
+  {
+    prevWord: "là",
+    types: ["TINH_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    prevWord: "",
+    types: ["TINH_NGU"],
+    value: "",
+    point: 3,
+  },
+  {
+    prevWord: "",
+    types: ["TINH_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    prevWord: "là",
+    types: ["TINH_NGU"],
+    value: "",
+    point: 3,
+  },
+  {
+    prevWord: "",
+    types: ["DONG_TU"],
+    value: "",
+    point: 3,
+  },
+  {
+    prevWord: "",
+    types: ["DONG_NGU"],
+    value: "",
+    point: 3,
+  },
+  {
+    types: ["SO_TU"],
+    value: "",
+    point: 3,
+  },
+];
 
-export const RulesOfV = {
-
-}
-
-export const RulesOfT = {
-  
-}
+export const RulesOfT = [];
 
 export const TYPE_BELONG_TO_NOUN = [
   "DAI_TU_CHI_TONG_LUONG",
