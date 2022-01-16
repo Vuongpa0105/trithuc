@@ -248,7 +248,10 @@ const InputWords = React.memo(({ handleSetData }) => {
     );
     FetchData(TINH_THAI_TU).then((value) =>
       setDataAboutWordTypes((prevState) => {
-        return { ...prevState, TINH_THAI_TU: value.trim().split(", ") };
+        return {
+          ...prevState,
+          TINH_THAI_TU_NGHI_VAN: value.trim().split(", "),
+        };
       })
     );
     FetchData(TINH_THAI_TU_CAU_KHIEN).then((value) =>
