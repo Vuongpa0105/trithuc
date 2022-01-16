@@ -160,9 +160,12 @@ export const arrangeIntoSubject = (phrase) => {
       let valueOfPhrase = ""
       let valueOfword = ""
       if (!e.types) {
-        for (let property in e.values) {
-          valueOfPhrase += (e.values[property].value + " ")
-        }
+        // for (let property in e.values) {
+        //   valueOfPhrase += (e.values[property].value + " ")
+        // }
+        e.values.forEach(k => {
+          valueOfPhrase += (k.value + " ")
+        })
       }
       if (e.types) {
         valueOfword = e.value

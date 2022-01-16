@@ -118,7 +118,7 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
       if ((elm2.type === "CUM_DANH_TU") || (elm2.type === "CUM_DONG_TU") || (elm2.type === "CUM_TINH_TU")) {
         const a = elm2.values
         const flatArr = Object.entries(a); 
-        flatArr.sort((v1, v2) => v1[1].index - v2[1].index);
+        flatArr.sort((v1, v2) => v2[1].index - v1[1].index);
         const resObj = {};
         const arr = []
         const arrKey = []
@@ -129,15 +129,16 @@ const ArrangeWordsIntoPhrasesDetail = (TYPE_PHRASE, words, ans) => {
           arr.push(val)
           arrKey.push(key)
         }
-        const objAns = {}
+        const objAns = []
         for (let i = arr.length - 1; i >= 0; --i) {
-          objAns[arrKey[i]] = arr[i]
+          objAns.push({...arr[i], key: arrKey[i]})
         }
+        // elm2.values = objAns
         elm2.values = objAns
       }
     })
   })
-  
+  console.log("ans: ", ans)
   return ans;
 };
 
