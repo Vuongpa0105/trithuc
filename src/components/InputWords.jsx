@@ -14,7 +14,7 @@ import DANH_TU_CHI_DON_VI_DO_LUONG from "../data/danhtuchidonvidoluong.txt";
 import PHO_TU_DUNG_SAU from "../data/photudungsau.txt";
 import PHO_TU_DUNG_TRUOC from "../data/photudungtruoc.txt";
 import QUAN_HE_TU from "../data/quanhetu.txt";
-import SO_TU_CHO_SO_LUONG from "../data/sotuchisoluong.txt";
+import SO_TU_CHI_SO_LUONG from "../data/sotuchisoluong.txt";
 import THAN_TU from "../data/thantu.txt";
 import TINH_THAI_TU from "../data/tinhthaitu.txt";
 import TINH_THAI_TU_CAU_KHIEN from "../data/tinhthaitucaukhien.txt";
@@ -36,6 +36,8 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
     value: word,
     types: [],
   };
+  // console.log(dataAboutWordTypes, "dataAboutWordTypes.....................");
+
   if (!dataAboutWordTypes) return;
   findWordInString(word, dataAboutWordTypes?.DANH_TU) &&
     typeOfWord.types.push("DANH_TU");
@@ -62,7 +64,7 @@ export const findTypeOfWord = (word, dataAboutWordTypes) => {
   findWordInString(word, dataAboutWordTypes?.QUAN_HE_TU) &&
     typeOfWord.types.push("QUAN_HE_TU");
   findWordInString(word, dataAboutWordTypes?.SO_TU_CHO_SO_LUONG) &&
-    typeOfWord.types.push("SO_TU_CHO_SO_LUONG");
+    typeOfWord.types.push("SO_TU_CHI_SO_LUONG");
   findWordInString(word, dataAboutWordTypes?.THAN_TU) &&
     typeOfWord.types.push("THAN_TU");
   findWordInString(word, dataAboutWordTypes?.TINH_THAI_TU) &&
@@ -123,12 +125,12 @@ const InputWords = React.memo(({ handleSetData }) => {
           setVisible(true);
         }
     }
-    
+
     for (let i = 0; i < words.length; ++i) {
       const typesOfWord = findTypeOfWord(words[i].trim(), dataAboutWordTypes);
       resultAfterSortingWordByType.push(typesOfWord);
     }
-    
+
     //Kich ban 4: tu nhap vao khong co trong data
     for (let i = 0; i < resultAfterSortingWordByType.length; i++) {
       if (resultAfterSortingWordByType[i].types.length === 0) {
@@ -136,15 +138,15 @@ const InputWords = React.memo(({ handleSetData }) => {
         setVisible(true);
       }
     }
-    
+
     const a = ArrangeWordsIntoPhrases(resultAfterSortingWordByType);
     const b = arrangeIntoSubject(a);
     const c = ArrangeThePhraeseIntoSentences(b);
-    const length = words.length
-    c.filter(elm => {
-      return elm.value.split(", ").length === length
-    })
-    handleSetData(c)
+    const length = words.length;
+    c.filter((elm) => {
+      return elm.value.split(", ").length === length;
+    });
+    handleSetData(c);
     resultAfterSortingWordByType = [];
   };
 
@@ -234,7 +236,7 @@ const InputWords = React.memo(({ handleSetData }) => {
         return { ...prevState, QUAN_HE_TU: value.trim().split(", ") };
       })
     );
-    FetchData(SO_TU_CHO_SO_LUONG).then((value) =>
+    FetchData(SO_TU_CHI_SO_LUONG).then((value) =>
       setDataAboutWordTypes((prevState) => {
         return { ...prevState, SO_TU_CHO_SO_LUONG: value.trim().split(", ") };
       })
