@@ -9,9 +9,9 @@ const CFirst = (couple) => {
   let ans = []
   couple.forEach((elm, index) => {
     let tmpAnsC = {}
-    let f = false
-    let tmpF = []
-    let valueHas = []
+    let f = false // check chỉ tìm ra một chủ ngữ
+    let tmpF = [] // các từ/ cụm từ không thể sắp xếp thành chủ ngữ
+    let valueHas = [] // mảng chứa các từ/ cụm từ đã được sắp thành chủ ngữ
     elm.forEach((elm2, index) => {
       ruleC.forEach((rule, index) => {
         if (elm2.type === rule.type) {
@@ -160,9 +160,6 @@ export const arrangeIntoSubject = (phrase) => {
       let valueOfPhrase = ""
       let valueOfword = ""
       if (!e.types) {
-        // for (let property in e.values) {
-        //   valueOfPhrase += (e.values[property].value + " ")
-        // }
         e.values.forEach(k => {
           valueOfPhrase += (k.value + " ")
         })
@@ -179,6 +176,7 @@ export const arrangeIntoSubject = (phrase) => {
       }
       else couple.push([`${e.type}, ${valueOfPhrase}, ${e.point}`])
     })
+    // chuyển thành dạng mảng string để sinh hoán vị
     couple = permutation(couple)
     const b = couple.map(elm => {
       return elm.map(elm2 => {
@@ -190,6 +188,7 @@ export const arrangeIntoSubject = (phrase) => {
         return i
       })
     })
+    // sinh xong hoán vị trả về kiểu mảng object
     ans = [...ans, ...CFirst(b), ...VFirst(b)]
   })
   return ans

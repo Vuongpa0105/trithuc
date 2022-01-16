@@ -203,33 +203,4 @@ export const RulesOfV = [
 
 export const RulesOfT = [];
 
-export const TYPE_BELONG_TO_NOUN = [
-  "DAI_TU_CHI_TONG_LUONG",
-  "DINH_TU_CHI_SO_LUONG",
-  "SO_TU_CHI_SO_LUONG",
-  "DANH_TU_LOAI_THE",
-  "DANH_TU_CHI_DON_VI_DO_LUONG",
-  "DANH_TU",
-  "TINH_TU",
-  "DONG_TU",
-  "DAI_TU_CHI_DINH",
-];
-export const TYPE_BELONG_TO_VERB = [
-  "PHO_TU_DUNG_TRUOC",
-  "TINH_TU",
-  "DONG_TU",
-  "PHO_TU_DUNG_SAU",
-  "TINH_THAI_TU",
-  "DANH_TU",
-  "DONG_TU",
-];
-export const TYPE_BELONG_TO_ADJ = [
-  "DANH_TU",
-  "DONG_TU",
-  "TINH_TU",
-  "PHO_TU_DUNG_TRUOC",
-  "TINH_TU",
-  "PHO_TU_DUNG_SAU",
-];
-
 export const RulesOfSentences = {};
